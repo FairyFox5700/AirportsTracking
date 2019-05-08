@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Structures
+namespace AirportsTracking
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("ok");
         }
     }
 }

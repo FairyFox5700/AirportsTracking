@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B58F4153-8D48-4C8A-AE70-D7292A0D85D8}</ProjectGuid>
+    <ProjectGuid>{E5029F55-2601-44A7-A922-437581A4E8B2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Structures</RootNamespace>
-    <AssemblyName>Structures</AssemblyName>
+    <RootNamespace>AirportsTracking</RootNamespace>
+    <AssemblyName>AirportsTracking</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,11 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AVLTree.cs" />
-    <Compile Include="SDictionary.cs" />
-    <Compile Include="List.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structures\AVLTree.cs" />
+    <Compile Include="Structures\List.cs" />
+    <Compile Include="Structures\PriorityQueue.cs" />
+    <Compile Include="Structures\Queue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
