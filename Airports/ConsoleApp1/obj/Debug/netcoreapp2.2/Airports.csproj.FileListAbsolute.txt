@@ -1,0 +1,11 @@
+D:\ExtensionVSSDK\Airports\ConsoleApp1\obj\Debug\netcoreapp2.2\Airports.csprojAssemblyReference.cache
+D:\ExtensionVSSDK\Airports\ConsoleApp1\obj\Debug\netcoreapp2.2\Airports.csproj.CoreCompileInputs.cache
+D:\ExtensionVSSDK\Airports\ConsoleApp1\obj\Debug\netcoreapp2.2\Airports.AssemblyInfoInputs.cache
+D:\ExtensionVSSDK\Airports\ConsoleApp1\obj\Debug\netcoreapp2.2\Airports.AssemblyInfo.cs
+D:\ExtensionVSSDK\Airports\ConsoleApp1\bin\Debug\netcoreapp2.2\Airports.deps.json
+D:\ExtensionVSSDK\Airports\ConsoleApp1\bin\Debug\netcoreapp2.2\Airports.runtimeconfig.json
+D:\ExtensionVSSDK\Airports\ConsoleApp1\bin\Debug\netcoreapp2.2\Airports.runtimeconfig.dev.json
+D:\ExtensionVSSDK\Airports\ConsoleApp1\bin\Debug\netcoreapp2.2\Airports.dll
+D:\ExtensionVSSDK\Airports\ConsoleApp1\bin\Debug\netcoreapp2.2\Airports.pdb
+D:\ExtensionVSSDK\Airports\ConsoleApp1\obj\Debug\netcoreapp2.2\Airports.dll
+D:\ExtensionVSSDK\Airports\ConsoleApp1\obj\Debug\netcoreapp2.2\Airports.pdb
