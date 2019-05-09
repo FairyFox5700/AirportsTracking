@@ -15,6 +15,8 @@ namespace Visualization
         public Form1()
         {
             //Start of something BIG
+
+            // Трутні, сорі, я просто тут дешо тестірую (всіх з перемогою)
             InitializeComponent();
         }
     }
