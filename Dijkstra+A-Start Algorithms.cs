@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace Airports
 {
     public class NextAirport
-    {
+    { // adding test line :)
         public Airport Current { get; set; }
         public string IATA { get; set; }
         public string Name { get; set; }
