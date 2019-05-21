@@ -74,6 +74,7 @@ namespace Airports
             try
             {
                 AirlineData.LoadData();
+                var dictOfNeighboursByCode = AirlineData.DictOfNeighbours;
                 var watch = Stopwatch.StartNew();
                 var priotityQueue  = new Queue<NextAirport>();
                 List<string> visited = new List<string>();
@@ -108,7 +109,7 @@ namespace Airports
 
                         if (neighbour != null)
                         {
-                            NextAirport _next = AirlineData.GetNextStation(neighbour.IATA);
+                            NextAirport _next = dictOfNeighboursByCode[neighbour.IATA];
                             if (!visited.Contains(neighbour.IATA) && _next != null)
                             {
                                 var best = GetPriceByPath(_flight.IATA, neighbour.IATA) + _flight.Weight;//maybe best price
@@ -119,8 +120,6 @@ namespace Airports
                                     path[_next] = _flight;
                                     SortQueue(ref priotityQueue);
                                 }
-                      
-                                
                             }
                         }
                     }
@@ -147,7 +146,9 @@ namespace Airports
                 current = Path[current];
                 result.Add(current);              
             }
-            Console.WriteLine("From airport with code {0} and name {1}  to airport  {2} and name {3}\n you can get with the best price {4}", Source.IATA, Source.Current.AirportName, Destination.IATA, Destination.Name, Destination.Weight);
+            Console.WriteLine("From airport with code {0} and name {1}  " +
+                "to airport  {2} and name {3}\n you can get with the best price {4}",
+                Source.IATA, Source.Current.AirportName, Destination.IATA, Destination.Name, Destination.Weight);
             Console.WriteLine(" Count of vetrices between two vertices = {0}", result.Count);
             Console.WriteLine("Path with minimal cost: ");
             for (int i = result.Count-1; i >= 0; i--)
@@ -164,6 +165,7 @@ namespace Airports
             {
                 var watch = Stopwatch.StartNew();
                 AirlineData.LoadData();
+                var dictOfNeighboursByCode = AirlineData.DictOfNeighbours;
                 Airport source = AirlineData.GetAirPort(sourceCode);
                 var next = AirlineData.GetNextStation(sourceCode);
                 var que = new Queue<NextAirport>();
@@ -189,7 +191,7 @@ namespace Airports
                         {
                             if (!(visited.Contains(neighbour)))
                             {
-                                que.Enqueue(AirlineData.GetNextStation(neighbour.IATA));
+                                que.Enqueue(dictOfNeighboursByCode[neighbour.IATA]);
                                 visited.Add(neighbour);
                                 counter++;
                             }

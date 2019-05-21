@@ -11,17 +11,17 @@ namespace Airports
 
     public class AirlineData
     {
-        // protected internal static List<Airport> listOfAirports = new List<Airport>();
         protected internal static List<Route> listOfRoutes = new List<Route>();
         protected internal static List<Route> listOfNeighbourRoutes = new List<Route>();
-        //protected internal static LinkedList<Airport> neighbours = new LinkedList<Airport>();
         protected internal static Airport airport = new Airport();
-       // protected internal static List<string> l = new List<string>();
         protected internal static string[] Airports { get; set; }
         protected internal static string[] Routes { get; set; }
         protected internal static string[] Neighbours { get; set; }
-       // protected internal static List<string> l = new List<string>();
-       // private string[] AirportRows;
+        protected internal static Dictionary<string, NextAirport> DictOfNeighbours { get; set; }
+
+
+
+
 
         protected static internal Airport GetAirPort(string airportCodeName)
         {
@@ -30,13 +30,13 @@ namespace Airports
                 foreach (var line in Airports)
                 {
                     string[] temp = line.Replace("\"", "").Split(",", System.StringSplitOptions.RemoveEmptyEntries);
-                        var name = temp[4].Replace("\"", "");
-                        if (temp[4] == airportCodeName)
-                        {
-                            var airport = CreateAirport(temp);
-                            return airport;
-                        }
-                    
+                    var name = temp[4].Replace("\"", "");
+                    if (temp[4] == airportCodeName)
+                    {
+                        var airport = CreateAirport(temp);
+                        return airport;
+                    }
+
                 }
             }
             catch (Exception a)
@@ -45,6 +45,22 @@ namespace Airports
             }
             return null;
         }
+
+        protected static internal List<Airport> ReturnListOfAirportsBy2City(string cityOne, string cityTwo)
+        {
+            var list = new List<Airport>();
+            Airports = GetAllInfoFromFile("airports.txt");
+            var allAirports = GetAirPort();
+            foreach(var airport in allAirports)
+            {
+                if (airport.CityName == cityOne || airport.CityName == cityTwo)
+                {
+                    list.Add(airport);
+                }
+            }
+            return list;
+        }
+    
         protected static internal Airport CreateAirport(string[] temp)
         {
             airport = new Airport(temp);
@@ -61,6 +77,7 @@ namespace Airports
                 {
                     string[] temp = line.Replace("\"", "").Split(",", System.StringSplitOptions.RemoveEmptyEntries);
                         var airport = CreateAirport(temp);
+                    if(airport!= null)
                         listOfAirports.Add(airport);
                     
                 }
@@ -101,9 +118,26 @@ namespace Airports
         }
         protected static internal void LoadData()
         {
-            Airports = GetAllInfoFromFile("airports.txt");
-            Routes = GetAllInfoFromFile("routes.txt");
-            Neighbours = GetAllInfoFromFile("nextStations.txt");
+            try
+            {
+                DictOfNeighbours = new Dictionary<string, NextAirport>();
+                Airports = GetAllInfoFromFile("airports.txt");
+                Routes = GetAllInfoFromFile("routes.txt");
+                Neighbours = GetAllInfoFromFile("nextStations.txt");
+                var allAirports = GetAirPort();
+                foreach (var airport in allAirports)
+                {
+                    if (airport != null)
+                    {
+                        DictOfNeighbours[airport.IATA] = GetNextStation(airport.IATA);
+                    }
+                }
+            }
+            catch (Exception a)
+            {
+                Console.WriteLine(a.Message);
+            }
+           // return null;
         }
         //reee
         protected static internal List<Route> GetRoutes(string codeName)
@@ -129,10 +163,9 @@ namespace Airports
             try
             {
                 LinkedList<Airport> neighbours = new LinkedList<Airport>();
-                // listOfRoutes = GetRoutes();
                 foreach (var port in routes)
                 {
-                    if (port.SourceName == codeName)
+                    if ( port != null && port.SourceName == codeName)
                     {
                         var next = GetAirPort(port.DestinationName);
 
@@ -147,8 +180,6 @@ namespace Airports
 
                     }
                 }
-
-
                 return neighbours;
             }
             catch (Exception a)
@@ -194,10 +225,14 @@ namespace Airports
                 foreach (var line in Neighbours)
                 {
                     string[] temp = line.Split(";", System.StringSplitOptions.RemoveEmptyEntries);
-                        if (temp[0] == stationCode)
+                        if (temp.Length==3 && temp[0] == stationCode)
                         {
-                            NextAirport nextAirport = new NextAirport(GetAirPort(temp[0]), temp[1], int.MaxValue, JsonConvert.DeserializeObject<LinkedList<Airport>>(temp[2]));
+                        var airport = GetAirPort(temp[0]);
+                        if (airport != null)
+                        {
+                            NextAirport nextAirport = new NextAirport(airport, temp[1], int.MaxValue, JsonConvert.DeserializeObject<LinkedList<Airport>>(temp[2]));
                             return nextAirport;
+                        }
                         }
                 }
             }
@@ -208,31 +243,6 @@ namespace Airports
             return null;
 
         }
-      /*  protected internal static NextAirport GetNextStation(string stationCode)
-        {
-            try
-            {
-                foreach (var line in Neighbours)
-                {
-                    string[] temp = line.Split(";", System.StringSplitOptions.RemoveEmptyEntries);
-                    if (temp[0] == stationCode)
-                    {
-                        NextAirport nextAirport = new NextAirport(GetAirPort(temp[0]), temp[1], int.MaxValue, JsonConvert.DeserializeObject<LinkedList<Airport>>(temp[2]));
-                        return nextAirport;
-                    }
-                }
-            }
-            catch (Exception a)
-            {
-                Console.WriteLine(a.Message);
-            }
-            return null;
-
-        }
-        */
-
-
-
         protected internal static string[] GetAllInfoFromFile( string resource)
         {
             try
